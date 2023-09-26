@@ -19,8 +19,10 @@
 
 require 'redmine'
 
+
 module Redmine
   module I18n
+    include ActionView::Helpers::NumberHelper
     def self.included(base)
       base.extend Redmine::I18n
     end
@@ -95,7 +97,8 @@ module Redmine
         m = ((hours - h) * 60).round
         "%d:%02d" % [h, m]
       else
-        "%.2f" % hours.to_f
+        #"%d" % hours.to_f
+        number_with_precision(hours.to_f, {delimiter: " ", precision: 0})
       end
     end
 
