@@ -48,7 +48,7 @@ class Redmine::Views::LabelledFormBuilder < ActionView::Helpers::FormBuilder
   def hours_field(field, options={})
     # display the value before type cast when the entered value is not valid
     if @object.errors[field].blank?
-      options = options.merge(:value => format_hours(@object.send field))
+      options = options.merge(:value => format_hours(@object.send field).tr(" ", ""))
     end
     text_field field, options
   end
