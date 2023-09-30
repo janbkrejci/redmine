@@ -369,8 +369,7 @@ td.hours .hours-dec { font-size: 0.9em; }
 
 .issue_total_estimated_hours, .issue_total_spent_hours {text-align: right; left: 0;}
 
-.total_estimated_hours { text-align: right !important;}
-.total_spent_hours { text-align: right !important;}
+.total_estimated_hours, .estimated_hours, .total_spent_hours, .spent_hours { text-align: right !important;}
 
 table.plugins td { vertical-align: middle; }
 table.plugins td.configure { text-align: right; padding-right: 1em; }
