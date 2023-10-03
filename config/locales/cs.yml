@@ -395,10 +395,10 @@ cs:
   permission_view_issue_watchers: Zobrazení seznamu sledujících uživatelů
   permission_add_issue_watchers: Přidání sledujících uživatelů
   permission_delete_issue_watchers: Smazat sledující uživatele
-  permission_log_time: Zaznamenávání stráveného času
-  permission_view_time_entries: Zobrazení stráveného času
-  permission_edit_time_entries: Upravování záznamů o stráveném času
-  permission_edit_own_time_entries: Upravování vlastních zázamů o stráveném čase
+  permission_log_time: Zaznamenávání nákladů
+  permission_view_time_entries: Zobrazení nákladů
+  permission_edit_time_entries: Upravování záznamů o nákladech
+  permission_edit_own_time_entries: Upravování vlastních zázamů o nákladech
   permission_manage_news: Spravování novinek
   permission_comment_news: Komentování novinek
   permission_view_documents: Prohlížení dokumentů
@@ -1115,13 +1115,13 @@ cs:
   label_blank_value: prázdná hodnota
   permission_copy_issues: Kopírovat úkoly
   error_password_expired: Platnost vašeho hesla vypršela a administrátor vás žádá o jeho změnu.
-  field_time_entries_visibility: Viditelnost časových záznamů
+  field_time_entries_visibility: Viditelnost záznamů o nákladech
   setting_password_max_age: Změna hesla je vyžadována po
   label_parent_task_attributes: Atributy rodičovského úkolu
   label_parent_task_attributes_derived: Vypočteno z dílčích úkolů
   label_parent_task_attributes_independent: Nezávisle na dílčích úkolech
-  label_time_entries_visibility_all: Všechny zaznamenané časy
-  label_time_entries_visibility_own: Zaznamenané časy vytvořené uživatelem
+  label_time_entries_visibility_all: Všechny zaznamenané náklady
+  label_time_entries_visibility_own: Náklady zaznamenané uživatelem
   label_member_management: Správa členů
   label_member_management_all_roles: Všechny role
   label_member_management_selected_roles_only: Pouze tyto role
@@ -1261,7 +1261,7 @@ cs:
   text_avatar_server_config_html: Aktuální avatar server je <a href="%{url}">%{url}</a>.
     Nastavení lze změnit v config/configuration.yml.
   setting_gantt_months_limit: Maximální počet měsíců zobrazených v ganttově diagramu
-  permission_import_time_entries: Import stráveného času
+  permission_import_time_entries: Import nákladů
   label_import_notifications: Odeslat emailové notifikace během importu
   text_gs_available: ImageMagick PDF podpora k dispozici (volitelné)
   field_recently_used_projects: Počet nedávno použitých projektů v rychlém výběru
@@ -1450,13 +1450,13 @@ cs:
     administrativní akci. To zaručí, že váš účet zůstane chráněný."
   label_edited: Upraveno
   label_time_by_author: "%{time} %{author}"
-  field_default_time_entry_activity: Výchozí aktivita stráveného času
+  field_default_time_entry_activity: Výchozí aktivita pro zápis nákladů
   field_is_member_of_group: Member of group
   text_users_bulk_destroy_head: You are about to delete the following users and remove
     all references to them. This cannot be undone. Often, locking users instead of deleting
     them is the better solution.
   text_users_bulk_destroy_confirm: To confirm, please enter "%{yes}" below.
-  permission_select_project_publicity: Set project public or private
+  permission_select_project_publicity: Nastavit, jestli je projekt veřejný, nebo soukromý
   label_auto_watch_on_issue_created: Issues I created
   field_any_searchable: Any searchable text
   label_contains_any_of: contains any of
