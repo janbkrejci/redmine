@@ -4,17 +4,11 @@
     // Další informace najdete tady: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
         {
             "name": "Rails server",
-            "type": "Ruby",
+            "type": "ruby_lsp",
             "request": "launch",
-            "program": "${workspaceRoot}/bin/rails",
-            "args": [
-                "server",
-                "-e",
-                "production"
-            ]
+            "program": "${workspaceRoot}/bin/rails server -e production"
         }
     ]
 }
