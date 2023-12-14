@@ -1,0 +1,10 @@
+<h2><%= l(:label_project_recalculate) %></h2>
+
+<p>Tato funkce spočítá plánované a spotřebované náklady ve všech projektech a každému nastaví
+  obsah uživatelských polí "Rozpočet (tis. Kč)" a "Vyčerpáno (tis. Kč)" podle získaných hodnot.</p>
+<p>Každému projektu budou vyplněny aktuální hodnoty tak, jak jsou nyní v projektu zadány. Tato operace je nevratná.</p>
+<p>Opravdu si přejete akci provést?</p>
+
+<%= form_tag(admin_recalculate_path, :method => :post) do %>
+<%= submit_tag l(:button_recalculate) %>
+<% end %>

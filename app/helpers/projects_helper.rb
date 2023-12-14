@@ -66,6 +66,7 @@ module ProjectsHelper
       links << link_to(l(:label_project_new), new_project_path, :class => 'icon icon-add')
     end
     if User.current.admin?
+      links << link_to(l(:label_project_recalculate), admin_recalculate_path, :class => 'icon icon-reload')
       links << link_to(l(:label_administration), admin_projects_path, :class => 'icon icon-settings')
     end
     links

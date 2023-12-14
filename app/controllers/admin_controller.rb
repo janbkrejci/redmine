@@ -47,6 +47,62 @@ class AdminController < ApplicationController
     render :action => "projects", :layout => false if request.xhr?
   end
 
+  def recalculate
+  end
+
+  def do_recalculate
+    error = ""
+
+    budget_field_idx = -1
+    spent_field_idx = -1
+    # najdu si indexy uživatelských polí "Rozpočet (tis. Kč)" a "Vyčerpáno (tis. Kč)" a uložím si je
+    ProjectCustomField.all.each do |fld|
+      # poku se pole jmenuje "Rozpočet (tis. Kč)", schov8m si index
+      if fld.name == "Rozpočet (tis. Kč)"
+        budget_field_idx = fld.id
+      end
+      if fld.name == "Vyčerpáno (tis. Kč)"
+        spent_field_idx = fld.id
+      end
+    end
+    if budget_field_idx == -1 || spent_field_idx == -1
+      error = "Nepodařilo se najít uživatelská pole Rozpočet (tis. Kč) a Vyčerpáno (tis. Kč)"
+    end
+
+    if error == ""
+      Project.all.each do |p|
+        # najdu si všechny issues v projektu
+        issues = Issue.where(project_id: p.id)
+        # projdu všechny issues a sečtu plánovné (field_estimated_hours) a spotřebované náklady
+        total_budget = 0
+        total_spent = 0
+        issues.each do |i|
+          budget = i.estimated_hours
+          spent = i.spent_hours
+          total_budget += budget
+          total_spent += spent
+        end
+        # uložím si do projektu
+        p.custom_field_values.each do |cfv|
+          if cfv.custom_field_id == budget_field_idx
+            cfv.value = total_budget
+          end
+          if cfv.custom_field_id == spent_field_idx
+            cfv.value = total_spent
+          end
+        end
+        p.save!
+      end
+    end
+
+    if error != ""
+      flash[:error] = l(:notice_update_error) + ': ' + error
+    else
+      flash[:notice] = l(:notice_successful_update)
+    end
+    redirect_to action: :recalculate, controller: :admin
+  end
+
   def plugins
     @plugins = Redmine::Plugin.all
   end

@@ -243,6 +243,9 @@ module Redmine
         menu.push :projects, {:controller => 'admin', :action => 'projects'},
                   :caption => :label_project_plural,
                   :html => {:class => 'icon icon-projects'}
+        menu.push :recalculate, {:controller => 'admin', :action => 'recalculate'},
+                  :caption => :label_project_recalculate,
+                  :html => {:class => 'icon icon-reload'}
         menu.push :users, {:controller => 'users'}, :caption => :label_user_plural,
                   :html => {:class => 'icon icon-user'}
         menu.push :groups, {:controller => 'groups'}, :caption => :label_group_plural,

@@ -185,6 +185,7 @@ cs:
   notice_unable_delete_time_entry: Nelze smazat záznam času.
   notice_issue_done_ratios_updated: Koeficienty dokončení úkolu byly aktualizovány.
   notice_gantt_chart_truncated: Graf byl oříznut, počet položek přesáhl limit pro zobrazení (%{max})
+  notice_update_error: Operace se nezdařila.
 
   error_can_t_load_default_data: "Výchozí konfigurace nebyla nahrána: %{value}"
   error_scm_not_found: "Položka a/nebo revize neexistují v repozitáři."
@@ -444,6 +445,7 @@ cs:
   label_project: Projekt
   label_project_new: Nový projekt
   label_project_plural: Projekty
+  label_project_recalculate: Přepočítat náklady
   label_x_projects:
     zero:  žádné projekty
     one:   1 projekt
@@ -1147,6 +1149,7 @@ cs:
   label_file_content_preview: Náhled obsahu souboru
   label_create_missing_values: Vytvořit chybějící hodnoty
   button_import: Import
+  button_recalculate: Provést přepočet
   field_total_estimated_hours: Celkové plánované náklady
   label_api: API
   label_total_plural: Celkem
