@@ -55,6 +55,7 @@ class AdminController < ApplicationController
 
     budget_field_idx = -1
     spent_field_idx = -1
+    phase_field_idx = -1
     # najdu si indexy uživatelských polí "Rozpočet (tis. Kč)" a "Vyčerpáno (tis. Kč)" a uložím si je
     ProjectCustomField.all.each do |fld|
       # poku se pole jmenuje "Rozpočet (tis. Kč)", schov8m si index
@@ -64,13 +65,29 @@ class AdminController < ApplicationController
       if fld.name == "Vyčerpáno (tis. Kč)"
         spent_field_idx = fld.id
       end
+      if fld.name == "Fáze"
+        phase_field_idx = fld.id
+      end
     end
-    if budget_field_idx == -1 || spent_field_idx == -1
-      error = "Nepodařilo se najít uživatelská pole Rozpočet (tis. Kč) a Vyčerpáno (tis. Kč)"
+    if budget_field_idx == -1 || spent_field_idx == -1 || phase_field_idx == -1
+      error = "Nepodařilo se najít uživatelská pole Rozpočet (tis. Kč), Vyčerpáno (tis. Kč) nebo Fáze"
     end
 
     if error == ""
       Project.all.each do |p|
+        # pokud m8 projekt nastaven0 u6ivatelsk0 pole "Fáze" na hodnotu jinou, než "3 - Exekuce", tak ho přeskočím
+        skip = false
+        p.custom_field_values.each do |cfv|
+          if cfv.custom_field_id == phase_field_idx
+            if cfv.value != "3 - Exekuce"
+              skip = true
+            end
+          end
+        end
+        if skip
+          next
+        end
+
         # najdu si všechny issues v projektu
         issues = Issue.where(project_id: p.id)
         # projdu všechny issues a sečtu plánovné (field_estimated_hours) a spotřebované náklady
@@ -85,10 +102,10 @@ class AdminController < ApplicationController
         # uložím si do projektu
         p.custom_field_values.each do |cfv|
           if cfv.custom_field_id == budget_field_idx
-            cfv.value = total_budget
+            cfv.value = total_budget.to_i
           end
           if cfv.custom_field_id == spent_field_idx
-            cfv.value = total_spent
+            cfv.value = total_spent.to_i
           end
         end
         p.save!
