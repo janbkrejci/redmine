@@ -94,8 +94,8 @@ class AdminController < ApplicationController
         total_budget = 0
         total_spent = 0
         issues.each do |i|
-          budget = i.estimated_hours
-          spent = i.spent_hours
+          budget = i.estimated_hours or 0
+          spent = i.spent_hours or 0
           total_budget += budget
           total_spent += spent
         end
