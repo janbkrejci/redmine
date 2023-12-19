@@ -56,6 +56,7 @@ class AdminController < ApplicationController
     budget_field_idx = -1
     spent_field_idx = -1
     phase_field_idx = -1
+    last_spent_on_date_idx = -1
     # najdu si indexy uživatelských polí "Rozpočet (tis. Kč)" a "Vyčerpáno (tis. Kč)" a uložím si je
     ProjectCustomField.all.each do |fld|
       # poku se pole jmenuje "Rozpočet (tis. Kč)", schov8m si index
@@ -68,9 +69,12 @@ class AdminController < ApplicationController
       if fld.name == "Fáze"
         phase_field_idx = fld.id
       end
+      if fld.name == "Poslední náklady k datu"
+        last_spent_on_date_idx = fld.id
+      end
     end
-    if budget_field_idx == -1 || spent_field_idx == -1 || phase_field_idx == -1
-      error = "Nepodařilo se najít uživatelská pole Rozpočet (tis. Kč), Vyčerpáno (tis. Kč) nebo Fáze"
+    if budget_field_idx == -1 || spent_field_idx == -1 || phase_field_idx == -1 || last_spent_on_date_idx == -1
+      error = "Nepodařilo se najít uživatelská pole Rozpočet (tis. Kč), Vyčerpáno (tis. Kč) nebo Fáze nebo Poslední náklady k datu."
     end
 
     if error == ""
@@ -93,11 +97,18 @@ class AdminController < ApplicationController
         # projdu všechny issues a sečtu plánovné (field_estimated_hours) a spotřebované náklady
         total_budget = 0
         total_spent = 0
+        last_spent_on = nil
         issues.each do |i|
-          budget = (i.estimated_hours or 0)
-          spent = (i.spent_hours or 0)
+          budget = (i.estimated_hours or 0.0).round
+          spent = (i.spent_hours or 0.0).round
           total_budget += budget
           total_spent += spent
+          # najdi si všechny time_emtries k dané issue a v nich najdi nejnovější hodnotu spent_on, tu ulož do proměnné last_spent_on
+          i.time_entries.each do |te|
+            if last_spent_on == nil || te.spent_on > last_spent_on
+              last_spent_on = te.spent_on
+            end
+          end
         end
         # uložím si do projektu
         p.custom_field_values.each do |cfv|
@@ -106,6 +117,9 @@ class AdminController < ApplicationController
           end
           if cfv.custom_field_id == spent_field_idx
             cfv.value = total_spent.to_i
+          end
+          if cfv.custom_field_id == last_spent_on_date_idx
+            cfv.value = last_spent_on
           end
         end
         p.save!
